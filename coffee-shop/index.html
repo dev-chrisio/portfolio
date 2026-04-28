@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew & Bean - Minimalist Coffee Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --primary: #FFFFFF;
+            --secondary: #071952;
+            --accent: #088395;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0a2540 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1495474472645-4c71bcdd2e18?w=1200&h=800&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent);
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+        
+        .section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+        
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&h=400&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        
+        .menu-item {
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(8, 131, 149, 0.1);
+        }
+        
+        .menu-item h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .menu-item p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .contact-section {
+            background-color: #f9f9f9;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .contact-item {
+            text-align: center;
+        }
+        
+        .contact-item h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .contact-item p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><span class="nav-logo">BREW & BEAN</span></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Brew & Bean</h1>
+            <p>Minimalist Coffee. Maximum Flavor.</p>
+            <button class="btn" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Explore Menu</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>At Brew & Bean, we believe in the art of simplicity. Our minimalist approach to coffee culture celebrates the pure essence of exceptional beans sourced from sustainable farms around the world.</p>
+                <p style="margin-top: 20px;">Every cup is crafted with precision and care, honoring the journey from seed to cup. We're committed to delivering an unforgettable coffee experience in a serene, thoughtfully designed space.</p>
+                <p style="margin-top: 20px;">Join us for a moment of clarity, one perfect cup at a time.</p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section" style="background-color: #f9f9f9;">
+        <h2 class="section-title">Our Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <h3>Espresso</h3>
+                <p>Bold, concentrated shot of pure coffee excellence. The foundation of all our creations.</p>
+                <div class="price">$3.50</div>
+            </div>
+            <div class="menu-item">
+                <h3>Americano</h3>
+                <p>Espresso diluted with hot water for a smooth, full-bodied cup with subtle complexity.</p>
+                <div class="price">$4.00</div>
+            </div>
+            <div class="menu-item">
+                <h3>Cappuccino</h3>
+                <p>Perfect balance of espresso, steamed milk, and velvety foam. A timeless classic.</p>
+                <div class="price">$4.50</div>
+            </div>
+            <div class="menu-item">
+                <h3>Latte</h3>
+                <p>Smooth and creamy blend of espresso and steamed milk with a delicate layer of foam.</p>
+                <div class="price">$4.50</div>
+            </div>
+            <div class="menu-item">
+                <h3>Flat White</h3>
+                <p>Velvety microfoam meets rich espresso for an intensely smooth coffee experience.</p>
+                <div class="price">$4.75</div>
+            </div>
+            <div class="menu-item">
+                <h3>Cold Brew</h3>
+                <p>Smooth, refreshing cold-steeped coffee. Perfect for warm days and clear minds.</p>
+                <div class="price">$4.25</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h3>Location</h3>
+                <p>123 Coffee Lane<br>Brew City, BC 12345<br>Canada</p>
+            </div>
+            <div class="contact-item">
+                <h3>Hours</h3>
+                <p>Monday - Friday<br>7:00 AM - 6:00 PM<br><br>Saturday - Sunday<br>8:00 AM - 5:00 PM</p>
+            </div>
+            <div class="contact-item">
+                <h3>Contact</h3>
+                <p>Phone: (555) 123-4567<br>Email: hello@brewbean.com<br>Instagram: @brewbean</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Brew & Bean. All rights reserved. | Crafted with precision and care.</p>
+    </footer>
+</body>
+</html>
